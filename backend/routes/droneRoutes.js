@@ -9,7 +9,8 @@ const {
 } = require("../controllers/droneController");
 
 router.route("/").get(getDrones).post(createDrone);
-
 router.route("/:id").get(getDrone).put(updateDrone).delete(deleteDrone);
+
+router.delete("/:id", deleteDrone);
 
 module.exports = router;

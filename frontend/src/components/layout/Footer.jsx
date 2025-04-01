@@ -1,12 +1,15 @@
 const Footer = () => {
   return (
-    <footer className="bg-slate-800 text-white h-14 border-t border-slate-700">
-      <div className="container mx-auto h-full px-6 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-sm">
-          <div className="flex items-center">
+    <footer className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 py-4 text-center text-gray-400 text-sm border-t border-slate-700/30">
+      <div className="container mx-auto">
+        <div className="flex items-center justify-center gap-4 hover:text-gray-300 transition-colors duration-300">
+          <span className="opacity-90">
+            &copy; {new Date().getFullYear()} Drone Survey. All rights reserved.
+          </span>
+          <span className="flex items-center gap-1 group">
+            Made by
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-1 text-blue-400"
+              className="w-4 h-4 group-hover:text-blue-400 group-hover:rotate-12 transition-all duration-300"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -15,33 +18,13 @@ const Footer = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
               />
             </svg>
-            <span className="font-medium">
-              Drone Survey &copy; {new Date().getFullYear()}
+            <span className="group-hover:text-blue-400 transition-colors duration-300">
+              abhisheknikam20@gmail.com
             </span>
-          </div>
-        </div>
-        <div className="flex space-x-6">
-          <a
-            href="#"
-            className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-xs"
-          >
-            About
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-xs"
-          >
-            Contact
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-xs"
-          >
-            Privacy
-          </a>
+          </span>
         </div>
       </div>
     </footer>

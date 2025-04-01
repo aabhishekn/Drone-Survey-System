@@ -1,0 +1,14 @@
+{
+  "name": "drone-survey-system",
+  "version": "1.0.0",
+  "description": "Drone Survey System with Frontend and Backend",
+  "scripts": {
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\""
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "concurrently": "^8.2.0",
+    "mapbox-gl": "^3.10.0",
+    "react-hot-toast": "^2.5.2"
+  }
+}

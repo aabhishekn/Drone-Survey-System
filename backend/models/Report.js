@@ -1,89 +1,49 @@
-const mongoose = require("mongoose");
+const { DataTypes } = require("sequelize");
 
-const ReportSchema = new mongoose.Schema({
-  mission: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Mission",
-    required: true,
-  },
-  name: {
-    type: String,
-    required: [true, "Report name is required"],
-    trim: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  drone: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Drone",
-    required: true,
-  },
-  area: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  duration: {
-    type: Number, // minutes
-    required: true,
-  },
-  distance: {
-    type: Number, // kilometers
-    required: true,
-  },
-  coverage: {
-    type: Number, // square kilometers
-    required: true,
-  },
-  images: {
-    type: Number,
-    default: 0,
-  },
-  findings: {
-    type: String,
-    trim: true,
-  },
-  status: {
-    type: String,
-    enum: ["draft", "completed", "reviewed"],
-    default: "completed",
-  },
-  dataCollected: {
-    images: [
-      {
-        type: String, // URL or path to image
-        trim: true,
-      },
-    ],
-    thermalData: [
-      {
-        type: String, // URL or path to thermal image
-        trim: true,
-      },
-    ],
-    lidarData: [
-      {
-        type: String, // URL or path to LiDAR data
-        trim: true,
-      },
-    ],
-  },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  updated: {
-    type: Date,
-    default: Date.now,
-  },
-});
+module.exports = (sequelize) => {
+  const Report = sequelize.define("Report", {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    drone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "Default Drone",
+    },
+    area: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    distance: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
+    },
+    images: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    findings: {
+      type: DataTypes.TEXT,
+      defaultValue: "",
+    },
+    month: {
+      type: DataTypes.STRING,
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: "completed",
+    },
+  });
 
-// Update the updated field on save
-ReportSchema.pre("save", function (next) {
-  this.updated = Date.now();
-  next();
-});
-
-module.exports = mongoose.model("Report", ReportSchema);
+  return Report;
+};

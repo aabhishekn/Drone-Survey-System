@@ -1,144 +1,94 @@
-const mongoose = require("mongoose");
+const { DataTypes } = require("sequelize");
 
-const WaypointSchema = new mongoose.Schema({
-  lat: {
-    type: Number,
-    required: true,
-  },
-  lng: {
-    type: Number,
-    required: true,
-  },
-  altitude: {
-    type: Number,
-    default: 100, // meters
-  },
-  action: {
-    type: String,
-    enum: ["waypoint", "capture", "hover", "return"],
-    default: "waypoint",
-  },
-  durationSeconds: {
-    type: Number,
-    default: 0,
-  },
-});
-
-const MissionSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Mission name is required"],
-    trim: true,
-  },
-  description: {
-    type: String,
-    trim: true,
-  },
-  area: {
-    type: String,
-    required: [true, "Survey area is required"],
-    trim: true,
-  },
-  startDate: {
-    type: Date,
-    required: [true, "Start date is required"],
-  },
-  endDate: {
-    type: Date,
-  },
-  isRecurring: {
-    type: Boolean,
-    default: false,
-  },
-  recurringInterval: {
-    type: String,
-    enum: ["daily", "weekly", "biweekly", "monthly"],
-    default: "weekly",
-  },
-  status: {
-    type: String,
-    enum: ["scheduled", "in-progress", "completed", "aborted", "cancelled"],
-    default: "scheduled",
-  },
-  progress: {
-    type: Number,
-    min: 0,
-    max: 100,
-    default: 0,
-  },
-  drones: [
+module.exports = (sequelize) => {
+  return sequelize.define(
+    "Mission",
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Drone",
-      required: true,
-    },
-  ],
-  waypoints: [WaypointSchema],
-  flightParams: {
-    altitude: {
-      type: Number,
-      default: 120, // meters
-    },
-    speed: {
-      type: Number,
-      default: 15, // m/s
-    },
-    sensors: {
-      camera: {
-        type: Boolean,
-        default: true,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
-      thermal: {
-        type: Boolean,
-        default: false,
+      description: {
+        type: DataTypes.TEXT,
       },
-      lidar: {
-        type: Boolean,
-        default: false,
+      area: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      startDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "Start date is required" },
+        },
+      },
+      endDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "End date is required" },
+          isAfterStart(value) {
+            if (this.startDate && value <= this.startDate) {
+              throw new Error("End date must be after start date");
+            }
+          },
+        },
+      },
+      isRecurring: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      recurringInterval: {
+        type: DataTypes.ENUM("daily", "weekly", "biweekly", "monthly"),
+        defaultValue: "weekly",
+      },
+      status: {
+        type: DataTypes.ENUM(
+          "scheduled",
+          "in-progress",
+          "completed",
+          "aborted",
+          "cancelled"
+        ),
+        defaultValue: "scheduled",
+      },
+      progress: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        validate: {
+          min: 0,
+          max: 100,
+        },
+      },
+      waypoints: {
+        type: DataTypes.JSON,
+        defaultValue: [],
+      },
+      flightParams: {
+        type: DataTypes.JSON,
+        defaultValue: {
+          altitude: 120,
+          speed: 15,
+          sensors: {
+            camera: true,
+            thermal: false,
+            lidar: false,
+          },
+          dataCollection: {
+            captureInterval: 5,
+            overlapPercentage: 60,
+          },
+        },
+      },
+      logs: {
+        type: DataTypes.JSON,
+        defaultValue: [],
       },
     },
-    dataCollection: {
-      captureInterval: {
-        type: Number,
-        default: 5, // seconds
-      },
-      overlapPercentage: {
-        type: Number,
-        default: 60, // %
-      },
-    },
-  },
-  logs: [
     {
-      timestamp: {
-        type: Date,
-        default: Date.now,
-      },
-      message: {
-        type: String,
-        required: true,
-      },
-      level: {
-        type: String,
-        enum: ["info", "warning", "error"],
-        default: "info",
-      },
-    },
-  ],
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  updated: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-// Update the updated field on save
-MissionSchema.pre("save", function (next) {
-  this.updated = Date.now();
-  next();
-});
-
-module.exports = mongoose.model("Mission", MissionSchema);
+      timestamps: true,
+      createdAt: "created",
+      updatedAt: "updated",
+    }
+  );
+};

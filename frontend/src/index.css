@@ -17,3 +17,70 @@ html {
 * {
   scrollbar-width: none;
 }
+
+/* Fix map z-index issues */
+.leaflet-container {
+  z-index: 0;
+}
+
+.leaflet-pane,
+.leaflet-control {
+  z-index: 10 !important;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 20 !important;
+}
+
+/* Header styles */
+header {
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
+}
+
+header:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure header is above map but below modals */
+header {
+  z-index: 30;
+}
+
+/* Navigation link transitions */
+header a {
+  transition: color 0.2s ease;
+}
+
+header a:hover {
+  transform: translateY(-1px);
+}
+
+.mission-btn {
+  @apply px-3 py-1.5 text-white text-xs rounded hover:opacity-90 transition-opacity;
+}
+
+/* Fleet Management specific styles */
+.fleet-table-container {
+  @apply rounded-xl border border-gray-200 overflow-hidden;
+}
+
+.fleet-table th {
+  @apply bg-gray-50 px-6 py-3.5 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider;
+}
+
+.fleet-table td {
+  @apply px-6 py-4 whitespace-nowrap text-sm;
+}
+
+/* Battery indicator animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.battery-critical {
+  animation: pulse 2s ease-in-out infinite;
+}
