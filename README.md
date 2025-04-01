@@ -1,124 +1,157 @@
 # Drone Survey Management System
 
-A comprehensive system designed for corporate facility managers to plan, manage, and monitor autonomous drone surveys across global locations.
+A comprehensive and robust platform designed to empower corporate facility managers to efficiently plan, manage, and monitor autonomous drone surveys across global locations. The system integrates mission planning, Drone management, real-time monitoring, and comprehensive reporting into one intuitive solution.
 
-## Features
+## Key Features
 
-- **Mission Planning**: Define survey areas, design flight paths, and schedule one-time or recurring missions.
-- **Fleet Management**: Dashboard of drone inventory showing real-time statuses and vital stats.
-- **Mission Monitoring**: Real-time visualization of drone flight paths on a map with mission progress and control actions.
-- **Survey Reporting**: Generate detailed survey summaries with flight statistics and organizational metrics.
+- **Mission Planning**  
+  Easily define survey areas, create optimized flight paths, and schedule single or recurring missions.
+
+- **Drone Management**  
+  Centralized dashboard to monitor drone inventory, real-time statuses, and key performance metrics.
+
+- **Mission Monitoring**  
+  Real-time tracking of drone missions via an interactive Leaflet map, enabling control and adjustments during flight.
+
+- **Survey Reporting**  
+  Detailed mission reports including flight statistics, analytics, and actionable insights.
 
 ## Tech Stack
 
 ### Frontend
 
-- React (with Vite)
-- Tailwind CSS
-- React Router
-- Mapbox GL JS (for mapping)
-- Axios (for API requests)
+- **React** (Vite-powered for rapid development)
+- **Tailwind CSS** for responsive and clean UI
+- **React Router** for smooth client-side routing
+- **Leaflet** (React-Leaflet) for interactive mapping (default OpenStreetMap tiles)
+- **Axios** for efficient API calls
 
 ### Backend
 
-- Node.js
-- Express
-- MongoDB/Mongoose (database schema ready, using mock data for demo)
+- **Node.js** with **Express** for scalable backend APIs
+- **SQLite** via **Sequelize** 
 
 ## Project Structure
 
 ```
 drone-survey-management/
-├── frontend/             # React frontend
-│   ├── public/
-│   └── src/
-│       ├── components/   # Reusable UI components
-│       ├── pages/        # Main page components
-│       └── ...
-├── backend/              # Node.js backend
-│   ├── config/           # Configuration files
-│   ├── controllers/      # Route controllers
-│   ├── models/           # Database models
+├── frontend/             # React frontend application
+│   ├── public/           # Static files
+│   └── src/              
+│       ├── components/   # Reusable components
+│       ├── pages/        # Page views
+│       └── ...           # Additional frontend logic
+├── backend/              # Node.js API
+│   ├── config/           # Config files (database, env)
+│   ├── controllers/      # API controllers
+│   ├── models/           # Database schemas
 │   ├── routes/           # API routes
-│   └── server.js         # Main server file
-└── README.md
+│   └── server.js         # Server entry point
+├── .env.example          # Example environment config
+├── package.json          # Root-level package.json
+└── README.md             # Project documentation
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14+)
-- npm or yarn
+- [Node.js](https://nodejs.org/) (v14+)
+- [npm](https://www.npmjs.com/)
 
 ### Installation
 
-1. Clone the repository
+1. **Clone Repository**
 
-```bash
-git clone https://github.com/yourusername/drone-survey-management.git
-cd drone-survey-management
-```
+   ```bash
+   git clone https://github.com/yourusername/drone-survey-management.git
+   cd drone-survey-management
+   ```
 
-2. Install Backend dependencies
+2. **Backend Setup**
 
-```bash
-cd backend
-npm install
-```
+   ```bash
+   cd backend
+   npm install
+   ```
 
-3. Set up environment variables in backend
-   Create a `.env` file in the backend directory with:
+   Create `.env` file in `backend`:
 
-```
-NODE_ENV=development
-PORT=5000
-```
+   ```env
+   NODE_ENV=development
+   PORT=5005
+   DB_NAME=drone_survey
+   DB_USER=root
+   DB_PASS=
+   DB_HOST=localhost
+   DB_DIALECT=sqlite
+   DB_STORAGE=./database.sqlite
+   ```
 
-4. Install Frontend dependencies
+3. **Frontend Setup**
 
-```bash
-cd ../frontend
-npm install
-```
+   ```bash
+   cd ../frontend
+   npm install
+   ```
 
-5. Replace Mapbox token
-   In `frontend/src/pages/MissionMonitoring.jsx`, replace the Mapbox access token with your own from [Mapbox](https://www.mapbox.com/).
+   *Mapping Configuration*: Modify map settings if needed (`frontend/src/pages/MissionMonitoring.jsx`). Leaflet with OpenStreetMap requires no API key by default.
 
-### Running the application
+4. **Root Setup (Optional)**
 
-1. Start the backend server
+   To concurrently run frontend and backend:
 
-```bash
-cd backend
-npm run dev
-```
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-2. In a new terminal, start the frontend
+## Running the Application
 
-```bash
-cd frontend
-npm run dev
-```
+- **Concurrently (Recommended):**
 
-3. Access the application at `http://localhost:5173`
+  ```bash
+  npm run dev
+  ```
 
-## Usage
+- **Separately:**
 
-1. **Dashboard**: View overall fleet and mission statistics
-2. **Mission Planning**: Create new missions with waypoints and settings
-3. **Mission Monitoring**: Track active missions on the map and control them
-4. **Survey Reporting**: View completed mission reports and analytics
+  **Backend:**
 
-## Notes
+  ```bash
+  cd backend
+  npm run dev
+  ```
 
-- This is a demonstration project using mock data
-- In a production environment, you would:
-  - Set up a real MongoDB database
-  - Implement proper authentication and authorization
-  - Add WebSocket support for real-time updates
-  - Implement a proper data pipeline for image and sensor data
+  **Frontend:**
+
+  ```bash
+  cd frontend
+  npm run dev
+  ```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Usage Overview
+
+- **Dashboard:** Drone and mission summaries
+- **Mission Planning:** Create configurable missions
+- **Mission Monitoring:** Real-time drone tracking
+- **Survey Reporting:** Detailed analytical reports
+- **Drone management:** Managing drone information
+
+## Production Considerations
+
+- **Database:** Migrate to PostgreSQL or another robust database
+- **Security:** Implement advanced authentication and authorization
+- **Real-Time Updates:** Add WebSocket support
+- **Data Handling:** Implement robust pipelines for processing imagery and sensor data
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Licensed under the [MIT License](LICENSE).
+
+---
+
+Optimize your drone survey operations with this intuitive and powerful management solution.
+

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Drone Survey System with Frontend and Backend",
   "scripts": {
+    "install-all": "cd frontend && npm install && cd ../backend && npm install && cd .. && npm install",
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && npm start",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\""
   },
   "dependencies": {
